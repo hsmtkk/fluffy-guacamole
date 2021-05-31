@@ -1,0 +1,12 @@
+rule cc_wrapper
+  command = gcc -I../../../vendor -Wall -c -o $out $in
+
+rule cc_main
+  command = gcc -Wall -c -o $out $in
+
+rule link
+  command = gcc -L../../../vendor -o $out $in -lvendor
+
+build main.o: cc_main main.c
+build wrapper.o: cc_wrapper wrapper.c
+build main.bin: link main.o wrapper.o

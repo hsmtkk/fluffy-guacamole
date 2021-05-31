@@ -1,0 +1,12 @@
+rule cc
+  command = gcc -Wall -c -o $out $in
+
+rule lib
+  command = gcc -Wall -shared -fPIC -I. -o $out $in
+
+rule link
+  command = gcc -L. -o $out $in -lvendor
+
+build main.o: cc main.c
+build libvendor.so: lib vendor.c
+build main.bin: link main.o libvendor.so
